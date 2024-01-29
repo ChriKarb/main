@@ -1,0 +1,28 @@
+# tasks/Makefile.namespaces
+
+## Namespace 1
+namespace1: action1
+	@echo "Namespace 1 actions completed."
+
+
+## Install actions second packet
+namespaces/install:
+	@mkdir namespace
+	@echo "1" > namespace/version
+	@echo "Install actions second packet"
+	make namespaces/version
+
+## check if component exists 
+namespaces/exists:
+	[ -d namespace ]
+	@echo "component exists"
+
+## check if component exists 
+namespaces/version:
+	@echo "component version"
+	@cat namespace/version 
+
+## uninstall component
+namespaces/uninstall:
+	@rm -rf namespace
+	@echo "component uninstalled"
