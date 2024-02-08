@@ -1,5 +1,9 @@
-config:
-  server: name
-  version: 1.5.1
+package:
+  - name: packetx
+    version: v.1.2.x or latest
+    location: ./localfolder / https://github.x/ChriKarb/paket3/blob/{version}
+  - name: packetx
+    version: v.1.2.x or latest
+    location: ./localfolder / https://github.x/ChriKarb/paket3/blob/{version}
   
   

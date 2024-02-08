@@ -2,11 +2,12 @@
 
 
 ## Install
-actions/install: actions/v1.5.1/install
+actions/install:
 	@echo "Install actions first packet"
 
 ## version
 actions/version:
+	@echo 
 
 ## exists
 actions/exists:
@@ -18,3 +19,4 @@ actions/needs:
 actions/v1.5.1/install:
 	@echo "Install action version v1.5.1 first packet"
 
+default: version

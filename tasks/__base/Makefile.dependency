@@ -1,0 +1,9 @@
+# tasks/Makefile.dependency
+
+
+
+## Install actions second packet
+dependency/catchEmpty:
+		@echo Iam workaround. you just call "make" in the parent makefile the first action in tasks/*/Makefile is called. (Folder are sorted alphanumeric)
+
+

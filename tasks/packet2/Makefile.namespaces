@@ -26,3 +26,6 @@ namespaces/version:
 namespaces/uninstall:
 	@rm -rf namespace
 	@echo "component uninstalled"
+
+
+default: version

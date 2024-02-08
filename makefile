@@ -29,6 +29,8 @@ CLUSTER ?= minikube
 -include tasks/*/Makefile.*
 
 ## This help screen
+
+# you will see every target in help if there is a ## comment 2 lines before the target
 help:
 		@printf "Available targets:\n\n"
 		@awk '/^[a-zA-Z\-\_0-9%:\\]+/ { \
@@ -49,15 +51,26 @@ help:
 ## Find all Makefiles in the specified subfolder
 ALLMAKEFILES := $(wildcard tasks/*/*)
 
+
+# Convert each Makefile path into unique target name 
+INSTALL_TARGETS := $(ALLMAKEFILES:%=install-%)
+
+# Debug print
+# $(info $(ALLMAKEFILES))
+# $(info $(INSTALL_TARGETS))
+
 ##  Default target
-all/install: $(ALLMAKEFILES)
+all/install: $(INSTALL_TARGETS)
+		@echo " Makefiles processed "
 
 ##  Rule to process each Makefile
-$(ALLMAKEFILES):
+
+$(INSTALL_TARGETS):
 # move to each dir -C $(dir $@)
 # use each makefile -f $(notdir $@)
-# as all are namespaced call install from each makefile  $(subst .,,$(suffix $@))/install
-		$(MAKE) -C $(dir $@) -f $(notdir $@) $(subst .,,$(suffix $@))/install
+# as all targets are namespaced call install from each makefile  $(subst .,,$(suffix $@))/install
+		@echo "Calling Makefile in $(dir $(@:install-%=%))"
+		$(MAKE) -C $(dir $(@:install-%=%)) -f $(notdir $(@:install-%=%)) $(subst .,,$(suffix $(notdir $(@:install-%=%))))/install
 
 
 
