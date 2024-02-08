@@ -33,7 +33,8 @@ CLUSTER ?= minikube
 # you will see every target in help if there is a ## comment 2 lines before the target
 help:
 		@printf "Available targets:\n\n"
-		@awk '/^[a-zA-Z\-\_0-9%:\\]+/ { \
+		@printf "to add an entry you need to add ## as comment before the target \n\n"
+		@awk '/^[a-zA-Z\-_0-9%:\\]+/ { \
 			helpMessage = match(lastLine, /^## (.*)/); \
 			if (helpMessage) { \
 				helpCommand = $$1; \
@@ -49,7 +50,10 @@ help:
 # Parent Makefile
 
 ## Find all Makefiles in the specified subfolder
+# uncomment to see entries 
+# $(info $(ALLMAKEFILES))
 ALLMAKEFILES := $(wildcard tasks/*/*)
+
 
 
 # Convert each Makefile path into unique target name 
@@ -59,19 +63,28 @@ VERSION_TARGETS := $(ALLMAKEFILES:%=VERSION-%)
 # $(info $(ALLMAKEFILES))
 # $(info $(VERSION_TARGETS))
 
+
+# Convert each Makefile path into unique target name to call e.g. version
+VERSION_TARGETS := $(ALLMAKEFILES:%=version-%)
+
+# Debug print
+
+# $(info $(VERSION_TARGETS))
+
 ##  Default target
 all/version: $(VERSION_TARGETS)
-		@echo " Makefiles processed "
+		@echo "Makefiles processed "
 
-##  Rule to process version target from each Makefile
+##  Rule to process each Makefile
 
 $(VERSION_TARGETS):
-# move to each dir: -C $(dir $@)
-# use each makefile: -f $(notdir $@)
-# as every target is namespaced call e.g. from each makefile : $(subst .,,$(suffix $(notdir $(@:install-%=%))))/version 
-		@echo "Calling Makefile in $(dir $(@:install-%=%))"
-		$(MAKE) -C $(dir $(@:install-%=%)) -f $(notdir $(@:install-%=%)) $(subst .,,$(suffix $(notdir $(@:install-%=%))))/version
-
+# move to each dir -C $(dir $@)
+# use each makefile -f $(notdir $@)
+# as all targets are namespaced we can call 'version' from each makefile  $(subst .,,$(suffix $(notdir $(@:install-%=%))))
+		@echo "Calling Makefile in $(dir $(@:version-%=%))"
+		@echo ""
+		$(MAKE) -C $(dir $(@:version-%=%)) -f $(notdir $(@:version-%=%)) $(subst .,,$(suffix $(notdir $(@:install-%=%))))/version --no-print-directory 
+		@echo ""
 
 
 .PHONY: help

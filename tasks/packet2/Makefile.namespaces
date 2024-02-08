@@ -19,8 +19,7 @@ namespaces/exists:
 
 ## check if component exists 
 namespaces/version:
-	@echo "component version"
-	@cat namespace/version 
+	@echo "component version 1. "
 
 ## uninstall component
 namespaces/uninstall:

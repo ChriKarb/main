@@ -1,9 +1,12 @@
 # tasks/Makefile.dependency
 
 
+## dummy but needed from parent
+dependency/version:
+		@echo I am a workaround. All makefiles which are includes need to accept some actions that the parent declares under all namespace
 
-## Install actions second packet
+
+## Workaround to not call anything unwanted when doing just make
 dependency/catchEmpty:
-		@echo Iam workaround. you just call "make" in the parent makefile the first action in tasks/*/Makefile is called. (Folder are sorted alphanumeric)
-
+		@echo Iam workaround. I think you want to get "make help". You just typed "make". In this setup what you get is the first action __base/ dependency/catchEmpty is called. He looks into tasks/*/Makefile ! Folder are sorted alphanumeric.
 

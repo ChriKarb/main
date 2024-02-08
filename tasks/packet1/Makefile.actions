@@ -7,7 +7,7 @@ actions/install:
 
 ## version
 actions/version:
-	@echo 
+	@echo v1.4.1
 
 ## exists
 actions/exists:
