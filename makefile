@@ -53,24 +53,24 @@ ALLMAKEFILES := $(wildcard tasks/*/*)
 
 
 # Convert each Makefile path into unique target name 
-INSTALL_TARGETS := $(ALLMAKEFILES:%=install-%)
+VERSION_TARGETS := $(ALLMAKEFILES:%=VERSION-%)
 
 # Debug print
 # $(info $(ALLMAKEFILES))
-# $(info $(INSTALL_TARGETS))
+# $(info $(VERSION_TARGETS))
 
 ##  Default target
-all/install: $(INSTALL_TARGETS)
+all/version: $(VERSION_TARGETS)
 		@echo " Makefiles processed "
 
-##  Rule to process each Makefile
+##  Rule to process version target from each Makefile
 
-$(INSTALL_TARGETS):
-# move to each dir -C $(dir $@)
-# use each makefile -f $(notdir $@)
-# as all targets are namespaced call install from each makefile  $(subst .,,$(suffix $@))/install
+$(VERSION_TARGETS):
+# move to each dir: -C $(dir $@)
+# use each makefile: -f $(notdir $@)
+# as every target is namespaced call e.g. from each makefile : $(subst .,,$(suffix $(notdir $(@:install-%=%))))/version 
 		@echo "Calling Makefile in $(dir $(@:install-%=%))"
-		$(MAKE) -C $(dir $(@:install-%=%)) -f $(notdir $(@:install-%=%)) $(subst .,,$(suffix $(notdir $(@:install-%=%))))/install
+		$(MAKE) -C $(dir $(@:install-%=%)) -f $(notdir $(@:install-%=%)) $(subst .,,$(suffix $(notdir $(@:install-%=%))))/version
 
 
 
